@@ -3,6 +3,9 @@ export interface ContentBlockProps {
   icon: string;
   title: string;
   content: string;
+  bg?: string;
+  gradient?: boolean;
+  brandColor?: string;
   section?: {
     title: string;
     content: string;
