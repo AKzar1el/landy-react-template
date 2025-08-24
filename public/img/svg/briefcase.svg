@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+  viewBox="0 0 24 24" role="img" aria-labelledby="title-briefcase"
+  class="icon icon-briefcase">
+  <title id="title-briefcase">Kovček — delovno razmerje</title>
+  <defs>
+    <linearGradient id="g-brief" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF7A00"/>
+      <stop offset="100%" stop-color="#2E186A"/>
+    </linearGradient>
+  </defs>
+  <style>
+    :root { --icon-primary:#2E186A; --icon-accent:#FF7A00; }
+    .icon { stroke-linecap:round; stroke-linejoin:round; fill:none; }
+    .icon * { transition: stroke .25s ease, transform .25s ease, filter .25s ease; }
+    .case { stroke: var(--icon-primary); stroke-width:2; }
+    .handle { stroke: url(#g-brief); stroke-width:2; transform-origin: 12px 6px; }
+    .divider { stroke: var(--icon-primary); stroke-width:2; stroke-dasharray: 100; stroke-dashoffset: 0; }
+    .icon:hover .case { stroke: var(--icon-accent); }
+    .icon:hover .handle { transform: translateY(-1px); }
+    .icon:hover .divider { stroke-dashoffset: -100; }
+    .icon:hover { transform: translateY(-1px); filter: drop-shadow(0 2px 6px rgba(46,24,106,.35)); }
+    @media (prefers-reduced-motion: reduce) {
+      .icon, .icon * { transition: none !important; }
+      .icon:hover { transform:none; filter:none; }
+    }
+  </style>
+  <path class="handle" d="M9 8V6a3 3 0 0 1 6 0v2"/>
+  <rect class="case" x="3" y="8" width="18" height="12" rx="2"/>
+  <path class="divider" d="M3 13h18"/>
+</svg>

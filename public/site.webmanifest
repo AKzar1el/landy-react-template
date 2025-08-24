@@ -1,0 +1,23 @@
+{
+  "name": "Tomlero",
+  "short_name": "Tomlero",
+  "description": "Brezplačno AI orodje za pravne informacije v Sloveniji (informativno; ni pravni nasvet).",
+  "icons": [
+    {
+      "src": "android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#2E186A",
+  "background_color": "#FFFFFF",
+  "display": "standalone",
+  "start_url": "/"
+}

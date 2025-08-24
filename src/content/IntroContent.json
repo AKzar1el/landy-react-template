@@ -1,13 +1,9 @@
 {
   "title": "Tomlero",
-  "text": "Pravne informacije, neodvisno in jedrnato. Tomlero (AI) preveri in navaja uradne vire za informirano odločitev.",
+  "text": "Informacije o brezplačni pravni pomoči (BPP) pogoji, postopki in uradni obrazci. Tomlero (AI) povzema in navaja uradne vire. Ni pravni nasvet.",
   "button": [
     {
       "title": "Začni Brezplačno"
-    },
-    {
-      "title": "Learn more",
-      "color": "#fff"
     }
   ]
 }

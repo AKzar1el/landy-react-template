@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+  viewBox="0 0 24 24" role="img" aria-labelledby="title-scale"
+  class="icon icon-scale">
+  <title id="title-scale">Tehtnica — pravno ravnotežje</title>
+  <defs>
+    <linearGradient id="g-scale" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2E186A"/>
+      <stop offset="100%" stop-color="#FF7A00"/>
+    </linearGradient>
+  </defs>
+  <style>
+    :root { --icon-primary:#2E186A; --icon-accent:#FF7A00; }
+    .icon { stroke-linecap:round; stroke-linejoin:round; fill:none; }
+    .icon * { transition: stroke .25s ease, transform .25s ease, filter .25s ease; }
+    .mast, .bar, .pans, .base { stroke-width:2; stroke: var(--icon-primary); }
+    .trace { stroke: url(#g-scale); stroke-width:2; stroke-dasharray: 100; stroke-dashoffset: 0; }
+    .icon:hover .mast, .icon:hover .bar, .icon:hover .pans, .icon:hover .base { stroke: var(--icon-accent); }
+    .icon:hover .trace { stroke-dashoffset: -100; }
+    .icon:hover { transform: translateY(-1px); filter: drop-shadow(0 2px 6px rgba(46,24,106,.35)); }
+    @media (prefers-reduced-motion: reduce) {
+      .icon, .icon * { transition: none !important; }
+      .icon:hover { transform:none; filter:none; }
+    }
+  </style>
+  <path class="mast" d="M12 3v4"/>
+  <path class="bar trace" d="M5 7h14"/>
+  <path class="pans" d="M7 7l-3 6h6L7 7z"/>
+  <path class="pans" d="M17 7l-3 6h6l-3-6z"/>
+  <path class="mast" d="M12 7v10"/>
+  <path class="base" d="M6 21h12"/>
+</svg>
