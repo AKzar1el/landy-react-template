@@ -4,6 +4,9 @@ import { MenuOutlined } from "@ant-design/icons";
 
 export const HeaderSection = styled("header")`
   padding: 1rem 0.5rem;
+  /* NEW: give the header the same gradient as hero */
+  background: #2E186A;
+  color: #fff; /* make default text readable on gradient */
 
   .ant-row-space-between {
     align-items: center;
@@ -41,7 +44,8 @@ export const Burger = styled("div")`
   display: none;
 
   svg {
-    fill: #2e186a;
+    /* was #2e186a */
+    fill: #fff;
   }
 `;
 
@@ -55,11 +59,14 @@ export const Menu = styled("h5")`
   font-size: 1.5rem;
   font-weight: 600;
   text-align: center;
+  /* new for readability */
+  color: #fff;
 `;
 
 export const CustomNavLinkSmall = styled(NavLink)`
   font-size: 1.2rem;
-  color: #18216d;
+  /* was #18216d */
+  color: #fff;
   transition: color 0.2s ease-in;
   margin: 0.5rem 2rem;
 
@@ -70,7 +77,8 @@ export const CustomNavLinkSmall = styled(NavLink)`
 
 export const Label = styled("span")`
   font-weight: 500;
-  color: #404041;
+  /* was #404041 */
+  color: #fff;
   text-align: right;
   display: flex;
   justify-content: space-between;
@@ -79,6 +87,8 @@ export const Label = styled("span")`
 
 export const Outline = styled(MenuOutlined)`
   font-size: 22px;
+  /* ensure icon is visible on gradient */
+  color: #fff;
 `;
 
 export const Span = styled("span")`
@@ -88,8 +98,9 @@ export const Span = styled("span")`
   &:hover,
   &:active,
   &:focus {
-    color: rgb(255, 130, 92);
+    /* warmer highlight to match the gradient */
+    color: #FFD8A6;
     text-underline-position: under;
-    text-decoration: rgb(255, 130, 92) wavy underline;
+    text-decoration: #FFD8A6 wavy underline;
   }
 `;
