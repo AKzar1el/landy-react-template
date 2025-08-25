@@ -3,3 +3,4 @@ Sitemap: https://tomlero.si/sitemap.xml
 
 User-agent: *
 Disallow:
+Sitemap: https://tomlero.si/sitemap.xml
