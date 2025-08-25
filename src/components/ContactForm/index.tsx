@@ -9,7 +9,7 @@ import Input from "../../common/Input";
 import TextArea from "../../common/TextArea";
 import { ContactContainer, FormGroup, Span, ButtonContainer } from "./styles";
 
-const FORM_ENDPOINT = "https://formsubmit.co/tomi.seregi99@gmail.com";
+const FORM_ENDPOINT = "https://formsubmit.co/8898226276b560fb196d042d3763dc52 ";
 
 const Contact = ({ title, content, id, t }: ContactProps) => {
   // Keep it simple: controlled inputs, native form POST (no custom handler).
