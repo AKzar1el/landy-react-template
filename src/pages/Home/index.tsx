@@ -24,7 +24,10 @@ const Home = () => {
         direction="right"
         title={IntroContent.title}
         content={IntroContent.text}
-        button={IntroContent.button}
+        button={[
+          { title: "ZAČNI BREZPLAČNO", href: "https://app.tomlero.si/", color: "secondary" }, // ✅ typed link button
+          // { title: "Več", targetId: "about" }, // optional scroll button
+        ]}
         icon="developer.svg"
         id="intro"
         fullBleed

@@ -47,7 +47,12 @@ const Header = ({ t }: { t: TFunction }) => {
         <CustomNavLinkSmall onClick={() => scrollTo("product")}>
           <Span>{t("Produkt")}</Span>
         </CustomNavLinkSmall>
-        <CustomNavLinkSmall style={{ width: "180px" }} onClick={() => scrollTo("contact")}>
+        <CustomNavLinkSmall   as="a"
+          href="https://app.tomlero.si/"
+          style={{ width: 180 }}
+          target="_self"              // or "_blank" to open in new tab
+          rel="noopener noreferrer"   // keep for security if using _blank
+          >
           <Span><Button>{t("ZAČNI BREZPLAČNO")}</Button></Span>
         </CustomNavLinkSmall>
       </>

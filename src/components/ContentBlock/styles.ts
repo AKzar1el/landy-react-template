@@ -80,11 +80,13 @@ export const HeroInner = styled.div`
   .ant-row { margin-left: 0 !important; margin-right: 0 !important; }
   .ant-col { padding-left: 0 !important; padding-right: 0 !important; }
 
-  /* Make hero text white by default */
-  color: #fff;
-  h1,h2,h3,h4,h5,h6,p,a { color:#fff; }
+  /* WIN the cascade inside the hero */
+  &&,
+  && h1, && h2, && h3, && h4, && h5, && h6,
+  && p, && a, && span, && li, && strong, && em {
+    color: #fff !important;
+  }
 
-  /* Avoid softening white */
   -webkit-font-smoothing: subpixel-antialiased;
   text-shadow: none;
 `;
@@ -95,10 +97,22 @@ export const Content = styled("p")`
   margin: 1.5rem 0 2rem 0;
 `;
 
-export const StyledRow = styled(Row)<{ direction: string }>`
-  flex-direction: ${({ direction }) => (direction === "left" ? "row" : "row-reverse")};
-`;
-
+export const StyledRow = styled(Row)
+  .withConfig({
+    // prevent leaking "direction" to AntD/DOM
+    shouldForwardProp: (prop, defaultValidator) =>
+      defaultValidator(prop) && String(prop) !== "direction",
+  })
+  .attrs<{ direction?: "left" | "right" | "up" | "down" }>(
+    ({ direction = "left" }) => ({
+      // let HeroSection react via :has([data-direction="right"])
+      "data-direction": direction,
+    }),
+  )<{ direction?: "left" | "right" | "up" | "down" }>`
+    /* Only flip when it's explicitly "right"; otherwise default layout */
+    flex-direction: ${({ direction = "left" }) =>
+      direction === "right" ? "row-reverse" : "row"};
+  `;
 export const ContentWrapper = styled("div")`
   position: relative;
   max-width: 540px;
@@ -121,10 +135,15 @@ export const MinTitle = styled("h6")`
   text-transform: uppercase;
   color: #000;
   font-family: "Motiva Sans Light", sans-serif;
+
+  /* inside the hero, force white */
+  ${HeroSection} & { color: #fff !important; }
 `;
 
 export const MinPara = styled("p")`
   font-size: 13px;
+  /* inside the hero, force white */
+  ${HeroSection} & { color: #fff !important; }
 `;
 
 export const ButtonWrapper = styled("div")`
@@ -167,4 +186,13 @@ export const CtaLink = styled.a`
   &[data-variant="secondary"] { background: var(--purple); color:#fff; }
   &:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(46, 24, 106, 0.35); }
   &:active { transform: translateY(0); }
+
+  /* ⬇️ Make hero CTAs a bit bigger, leave others unchanged */
+  ${HeroSection} & {
+    padding: 12px 18px;
+    min-height: 44px;
+    font-size: 15px;
+    border-radius: 14px;
+  }
 `;
+

@@ -22,7 +22,10 @@ const AboutSad = () => {
         direction="right"
         title={Hero.title}
         content={Hero.text}
-        button={Hero.button}
+        button={[
+          { title: "ZAČNI BREZPLAČNO", href: "https://app.tomlero.si/" }, // ✅ typed link button
+          // { title: "Več", targetId: "about" }, // optional scroll button
+        ]}
         icon="developer.svg"          // swap if you have an about icon
         id="about-hero"
         fullBleed

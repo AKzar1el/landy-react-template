@@ -3,7 +3,11 @@ import { Row, Col } from "antd";
 import { Fade } from "react-awesome-reveal";
 import { withTranslation } from "react-i18next";
 
-import { ContentBlockProps } from "./types";
+import {
+  type ContentBlockProps,
+  type ButtonItem,
+  type ButtonLink,
+} from "./types";
 import { Button } from "../../common/Button";
 import { SvgIcon } from "../../common/SvgIcon";
 import {
@@ -21,6 +25,12 @@ import {
   CtaLink,
 } from "./styles";
 
+const isLinkButton = (btn: ButtonItem): btn is ButtonLink =>
+  typeof (btn as ButtonLink).href === "string" && (btn as ButtonLink).href.length > 0;
+
+const isExternal = (href?: string, explicit?: boolean) =>
+  explicit ?? Boolean(href && /^https?:\/\//i.test(href));
+
 const ContentBlock = ({
   icon,
   title,
@@ -37,10 +47,9 @@ const ContentBlock = ({
     document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const isExternal = (href?: string, explicit?: boolean) =>
-    explicit ?? Boolean(href && /^https?:\/\//i.test(href));
-
   const Section = fullBleed ? HeroSection : ContentSection;
+
+  // allow CSS custom property for hero background
   const sectionStyle: CSSProperties & { ["--hero-bg"]?: string } = {};
   if (fullBleed && heroBg) sectionStyle["--hero-bg"] = heroBg;
 
@@ -86,9 +95,8 @@ const ContentBlock = ({
   const renderButtons = () =>
     Array.isArray(button) && button.length > 0 ? (
       <ButtonWrapper>
-        {button.map((raw: any, idx: number) => {
-          const b = raw ?? {};
-          if (b.href) {
+        {button.map((b, idx) => {
+          if (isLinkButton(b)) {
             const external = isExternal(b.href, b.external);
             return (
               <CtaLink
@@ -97,14 +105,13 @@ const ContentBlock = ({
                 target={external ? "_blank" : undefined}
                 rel={external ? "noopener noreferrer" : undefined}
                 data-variant={b.color ? "secondary" : "primary"}
-                aria-label={
-                  external ? `${t(b.title)} (odpre se v novem zavihku)` : t(b.title)
-                }
+                aria-label={external ? `${t(b.title)} (odpre se v novem zavihku)` : t(b.title)}
               >
                 {t(b.title)}
               </CtaLink>
             );
           }
+          // Scroll button
           return (
             <Button key={idx} color={b.color} onClick={() => scrollTo(b.targetId ?? "about")}>
               {t(b.title)}
