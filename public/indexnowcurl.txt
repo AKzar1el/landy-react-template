@@ -1,0 +1,11 @@
+curl -X POST "https://api.indexnow.org/indexnow" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -d '{
+    "host": "tomlero.si",
+    "key": "f88d8f359484eb0197207462247a1c45",
+    "keyLocation": "https://tomlero.si/f88d8f359484eb0197207462247a1c45.txt",
+    "urlList": [
+      "https://tomlero.si",
+      "https://app.tomlero.si"
+    ]
+  }'
