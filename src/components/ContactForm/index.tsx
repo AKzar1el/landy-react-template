@@ -1,21 +1,25 @@
+import { useState } from "react";
 import { Row, Col } from "antd";
 import { withTranslation } from "react-i18next";
 import { Slide } from "react-awesome-reveal";
-import { ContactProps, ValidationTypeProps } from "./types";
-import { useForm } from "../../common/utils/useForm";
-import validate from "../../common/utils/validationRules";
+import { ContactProps } from "./types";
 import { Button } from "../../common/Button";
 import Block from "../Block";
 import Input from "../../common/Input";
 import TextArea from "../../common/TextArea";
 import { ContactContainer, FormGroup, Span, ButtonContainer } from "./styles";
 
-const Contact = ({ title, content, id, t }: ContactProps) => {
-  const { values, errors, handleChange, handleSubmit } = useForm(validate);
+const FORM_ENDPOINT = "https://formsubmit.co/tomi.seregi99@gmail.com";
 
-  const ValidationType = ({ type }: ValidationTypeProps) => {
-    const ErrorMessage = errors[type as keyof typeof errors];
-    return <Span>{ErrorMessage}</Span>;
+const Contact = ({ title, content, id, t }: ContactProps) => {
+  // Keep it simple: controlled inputs, native form POST (no custom handler).
+  const [values, setValues] = useState({ name: "", email: "", message: "" });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setValues((v) => ({ ...v, [name]: value }));
   };
 
   return (
@@ -26,40 +30,61 @@ const Contact = ({ title, content, id, t }: ContactProps) => {
             <Block title={title} content={content} />
           </Slide>
         </Col>
+
         <Col lg={12} md={12} sm={24} xs={24}>
           <Slide direction="right" triggerOnce>
-            <FormGroup autoComplete="off" onSubmit={handleSubmit}>
+            {/* Native HTML POST straight to email via FormSubmit */}
+            <FormGroup action={FORM_ENDPOINT} method="POST" autoComplete="off">
+              {/* Anti-bot honeypot (hidden text field bots will fill) */}
+              <input type="text" name="_honey" style={{ display: "none" }} tabIndex={-1} autoComplete="off" />
+
+              {/* Optional tweaks */}
+              <input type="hidden" name="_subject" value="Tomlero.si – novo sporočilo" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="table" />
+              {/* Redirect after submit (optional). Change if you have a /thanks page. */}
+              {/* <input type="hidden" name="_next" value="https://tomlero.si/#contact" /> */}
+
               <Col span={24}>
                 <Input
                   type="text"
-                  name="Ime"
+                  name="name"
                   placeholder="Ime"
-                  value={values.name || ""}
+                  value={values.name}
                   onChange={handleChange}
+                  required
                 />
-                <ValidationType type="name" />
+                <Span /> {/* keeps layout spacing similar to your old validation span */}
               </Col>
+
               <Col span={24}>
                 <Input
-                  type="text"
+                  type="email"
                   name="email"
                   placeholder="Email"
-                  value={values.email || ""}
+                  value={values.email}
                   onChange={handleChange}
+                  required
                 />
-                <ValidationType type="email" />
+                <Span />
               </Col>
+
               <Col span={24}>
                 <TextArea
-                  placeholder="Vaše Sporočilo"
-                  value={values.message || ""}
-                  name="Sporočilo"
+                  name="message"
+                  placeholder="Vaše sporočilo"
+                  value={values.message}
                   onChange={handleChange}
+                  required
                 />
-                <ValidationType type="message" />
+                <Span />
               </Col>
+
               <ButtonContainer>
-                <Button name="submit">{t("Pošlji")}</Button>
+                {/* Ensure the underlying element is a real submit button */}
+                <Button type="submit" name="submit">
+                  {t("Pošlji")}
+                </Button>
               </ButtonContainer>
             </FormGroup>
           </Slide>

@@ -23,6 +23,7 @@ export interface InputProps {
   t: TFunction;
   type?: string;
   value?: string;
+  required?: boolean;
   onChange: (
     event:
       | React.ChangeEvent<HTMLInputElement>
