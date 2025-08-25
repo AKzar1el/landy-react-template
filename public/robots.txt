@@ -1,3 +1,5 @@
-# https://www.robotstxt.org/robotstxt.html
+# robots.txt for https://tomlero.si/
+Sitemap: https://tomlero.si/sitemap.xml
+
 User-agent: *
 Disallow:
