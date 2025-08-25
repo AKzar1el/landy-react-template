@@ -44,6 +44,76 @@ const ContentBlock = ({
   const sectionStyle: CSSProperties & { ["--hero-bg"]?: string } = {};
   if (fullBleed && heroBg) sectionStyle["--hero-bg"] = heroBg;
 
+  const renderSectionGrid = () =>
+    Array.isArray(section) && section.length > 0 ? (
+      <ServiceWrapper>
+        <Row justify="space-between">
+          {section.map((item, idx) => (
+            <Col key={idx} span={11}>
+              {item.icon ? <SvgIcon src={item.icon} width="60px" height="60px" /> : null}
+              <MinTitle>{t(item.title)}</MinTitle>
+              <MinPara>{t(item.content)}</MinPara>
+
+              {Array.isArray(item.ctas) && item.ctas.length > 0 ? (
+                <CtaRow>
+                  {item.ctas.map((cta, i) => {
+                    const external = isExternal(cta.href, cta.external);
+                    return (
+                      <CtaLink
+                        key={`${cta.href ?? "cta"}-${i}`}
+                        href={cta.href}
+                        target={external ? "_blank" : undefined}
+                        rel={external ? "noopener noreferrer" : undefined}
+                        data-variant={cta.variant ?? (i > 0 ? "secondary" : "primary")}
+                        aria-label={
+                          external
+                            ? `${t(cta.label)} (odpre se v novem zavihku)`
+                            : t(cta.label)
+                        }
+                      >
+                        {t(cta.label)}
+                      </CtaLink>
+                    );
+                  })}
+                </CtaRow>
+              ) : null}
+            </Col>
+          ))}
+        </Row>
+      </ServiceWrapper>
+    ) : null;
+
+  const renderButtons = () =>
+    Array.isArray(button) && button.length > 0 ? (
+      <ButtonWrapper>
+        {button.map((raw: any, idx: number) => {
+          const b = raw ?? {};
+          if (b.href) {
+            const external = isExternal(b.href, b.external);
+            return (
+              <CtaLink
+                key={`${b.href}-${idx}`}
+                href={b.href}
+                target={external ? "_blank" : undefined}
+                rel={external ? "noopener noreferrer" : undefined}
+                data-variant={b.color ? "secondary" : "primary"}
+                aria-label={
+                  external ? `${t(b.title)} (odpre se v novem zavihku)` : t(b.title)
+                }
+              >
+                {t(b.title)}
+              </CtaLink>
+            );
+          }
+          return (
+            <Button key={idx} color={b.color} onClick={() => scrollTo(b.targetId ?? "about")}>
+              {t(b.title)}
+            </Button>
+          );
+        })}
+      </ButtonWrapper>
+    ) : null;
+
   return (
     <Section style={sectionStyle}>
       <Fade direction={direction} triggerOnce>
@@ -54,7 +124,7 @@ const ContentBlock = ({
               direction={direction}
               justify="space-between"
               align="middle"
-              gutter={[24, 24]} /* spacing between the two columns */
+              gutter={[24, 24]}
             >
               <Col lg={12} md={12} sm={24} xs={24}>
                 <SvgIcon src={icon} width="100%" height="100%" />
@@ -65,73 +135,8 @@ const ContentBlock = ({
                   <h6>{t(title)}</h6>
                   <Content>{t(content)}</Content>
 
-                  {direction === "right" ? (
-                    <ButtonWrapper>
-                      {Array.isArray(button) &&
-                        button.map((item, idx) => {
-                          const b: any = item;
-                          if (b.href) {
-                            const external = isExternal(b.href, b.external);
-                            return (
-                              <CtaLink
-                                key={`${b.href}-${idx}`}
-                                href={b.href}
-                                target={external ? "_blank" : undefined}
-                                rel={external ? "noopener noreferrer" : undefined}
-                                data-variant={b.color ? "secondary" : "primary"}
-                                aria-label={
-                                  external
-                                    ? `${t(b.title)} (odpre se v novem zavihku)`
-                                    : t(b.title)
-                                }
-                              >
-                                {t(b.title)}
-                              </CtaLink>
-                            );
-                          }
-                          return (
-                            <Button key={idx} color={b.color} onClick={() => scrollTo("about")}>
-                              {t(item.title)}
-                            </Button>
-                          );
-                        })}
-                    </ButtonWrapper>
-                  ) : (
-                    <ServiceWrapper>
-                      <Row justify="space-between">
-                        {Array.isArray(section) &&
-                          section.map((item, idx) => (
-                            <Col key={idx} span={11}>
-                              <SvgIcon src={item.icon} width="60px" height="60px" />
-                              <MinTitle>{t(item.title)}</MinTitle>
-                              <MinPara>{t(item.content)}</MinPara>
-
-                              {item.ctas?.length ? (
-                                <CtaRow>
-                                  {item.ctas.map((cta, i) => {
-                                    const external = isExternal(cta.href, cta.external);
-                                    return (
-                                      <CtaLink
-                                        key={`${cta.href}-${i}`}
-                                        href={cta.href}
-                                        target={external ? "_blank" : undefined}
-                                        rel={external ? "noopener noreferrer" : undefined}
-                                        data-variant={cta.variant ?? (i > 0 ? "secondary" : "primary")}
-                                        aria-label={
-                                          external ? `${t(cta.label)} (odpre se v novem zavihku)` : t(cta.label)
-                                        }
-                                      >
-                                        {t(cta.label)}
-                                      </CtaLink>
-                                    );
-                                  })}
-                                </CtaRow>
-                              ) : null}
-                            </Col>
-                          ))}
-                      </Row>
-                    </ServiceWrapper>
-                  )}
+                  {renderSectionGrid()}
+                  {renderButtons()}
                 </ContentWrapper>
               </Col>
             </StyledRow>
@@ -141,10 +146,14 @@ const ContentBlock = ({
             <Col lg={11} md={11} sm={12} xs={24}>
               <SvgIcon src={icon} width="100%" height="100%" />
             </Col>
+
             <Col lg={11} md={11} sm={11} xs={24}>
               <ContentWrapper>
                 <h6>{t(title)}</h6>
                 <Content>{t(content)}</Content>
+
+                {renderSectionGrid()}
+                {renderButtons()}
               </ContentWrapper>
             </Col>
           </StyledRow>
