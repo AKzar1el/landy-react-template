@@ -1,3 +1,21 @@
-<svg viewBox="0 0 130 40" xmlns="http://www.w3.org/2000/svg">
-  <text y="30" font-family="Motiva Sans Bold, sans-serif" fill="#18216d" font-size="43px" font-weight="700">Landy</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 480" role="img" aria-labelledby="title desc">
+  <title>Tomlero — horizontal logo</title>
+  <desc>Rounded-square gradient 'T' logomark on the left with the 'Tomlero' wordmark to the right.</desc>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF7A00"/>
+      <stop offset="100%" stop-color="#2E186A"/>
+    </linearGradient>
+    <style>
+      .wordmark { font: 600 220px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "DejaVu Sans", sans-serif; fill: #2E186A; }
+    </style>
+  </defs>
+  <!-- mark -->
+  <g transform="translate(40,40)">
+    <rect x="0" y="0" width="400" height="400" rx="90" ry="90" fill="url(#g)"/>
+    <rect x="72" y="72" width="256" height="66" rx="33" ry="33" fill="#FFFFFF"/>
+    <rect x="170" y="138" width="60" height="210" rx="30" ry="30" fill="#FFFFFF"/>
+  </g>
+  <!-- wordmark -->
+  <text class="wordmark" x="500" y="320">Tomlero</text>
 </svg>
