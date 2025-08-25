@@ -1,7 +1,8 @@
-import { lazy } from "react";
+// src/pages/Home/index.tsx
+import { lazy, Fragment } from "react";
 import IntroContent from "../../content/IntroContent.json";
 import MiddleBlockContent from "../../content/MiddleBlockContent.json";
-import { AboutContent } from "../../content/AboutContent"; // <-- typed TS module
+import { AboutContent } from "../../content/AboutContent";
 import MissionContent from "../../content/MissionContent.json";
 import ProductContent from "../../content/ProductContent.json";
 import ContactContent from "../../content/ContactContent.json";
@@ -14,8 +15,11 @@ const ContentBlock = lazy(() => import("../../components/ContentBlock"));
 
 const Home = () => {
   return (
-    <Container>
+    <Fragment>
+      {/* keep this global helper outside any padded wrapper */}
       <ScrollToTop />
+
+      {/* HERO OUTSIDE THE CONTAINER → full-bleed background won’t be framed */}
       <ContentBlock
         direction="right"
         title={IntroContent.title}
@@ -24,42 +28,50 @@ const Home = () => {
         icon="developer.svg"
         id="intro"
         fullBleed
-        heroBg="#ff7a00"
-      />
-      <MiddleBlock
-        title={MiddleBlockContent.title}
-        content={MiddleBlockContent.text}
-        button={MiddleBlockContent.button}
-      />
-      <ContentBlock
-        direction="left"
-        title={AboutContent.title}
-        content={AboutContent.text}
-        section={AboutContent.section}
-        icon="graphs.svg"
-        id="about"
         
+        heroBg="linear-gradient(135deg,#FF8C1A,#2E186A)"   // or "linear-gradient(135deg,#FF7A00,#2E186A)"
       />
-      <ContentBlock
-        direction="right"
-        title={MissionContent.title}
-        content={MissionContent.text}
-        icon="product-launch.svg"
-        id="mission"
-      />
-      <ContentBlock
-        direction="left"
-        title={ProductContent.title}
-        content={ProductContent.text}
-        icon="waving.svg"
-        id="product"
-      />
-      <Contact
-        title={ContactContent.title}
-        content={ContactContent.text}
-        id="contact"
-      />
-    </Container>
+
+      {/* Everything else remains inside the page container */}
+      <Container>
+        <MiddleBlock
+          title={MiddleBlockContent.title}
+          content={MiddleBlockContent.text}
+          button={MiddleBlockContent.button}
+        />
+
+        <ContentBlock
+          direction="left"
+          title={AboutContent.title}
+          content={AboutContent.text}
+          section={AboutContent.section}
+          icon="graphs.svg"
+          id="about"
+        />
+
+        <ContentBlock
+          direction="right"
+          title={MissionContent.title}
+          content={MissionContent.text}
+          icon="product-launch.svg"
+          id="mission"
+        />
+
+        <ContentBlock
+          direction="left"
+          title={ProductContent.title}
+          content={ProductContent.text}
+          icon="waving.svg"
+          id="product"
+        />
+
+        <Contact
+          title={ContactContent.title}
+          content={ContactContent.text}
+          id="contact"
+        />
+      </Container>
+    </Fragment>
   );
 };
 
