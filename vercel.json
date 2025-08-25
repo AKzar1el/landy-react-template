@@ -1,15 +1,25 @@
 {
-    "$schema": "https://openapi.vercel.sh/vercel.json",
-    "rewrites": [{ "source": "/(.*)", "destination": "/" }],
-    "headers": [
-      {
-        "source": "/(favicon\\.ico|favicon\\.svg|apple-touch-icon\\.png|android-chrome-\\d+x\\d+\\.png|site\\.webmanifest)",
-        "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, immutable" }]
-      },
-      {
-        "source": "/og-image\\.png",
-        "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
-      }
-    ]
-  }
-  
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+
+  "headers": [
+    {
+      "source": "/(favicon\\.ico|favicon\\.svg|apple-touch-icon\\.png|android-chrome-\\d+x\\d+\\.png|site\\.webmanifest)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, immutable" }]
+    },
+    {
+      "source": "/og-image\\.png",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
+    },
+    {
+      "source": "/sitemap\\.xml",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, s-maxage=300" },
+        { "key": "Content-Type", "value": "application/xml; charset=utf-8" }
+      ]
+    },
+    {
+      "source": "/robots\\.txt",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, s-maxage=300" }]
+    }
+  ]
+}
