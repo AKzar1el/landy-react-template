@@ -23,6 +23,8 @@ const Home = () => {
         button={IntroContent.button}
         icon="developer.svg"
         id="intro"
+        fullBleed
+        heroBg="#ff7a00"
       />
       <MiddleBlock
         title={MiddleBlockContent.title}

@@ -34,4 +34,8 @@ export interface ContentBlockProps {
   t: TFunction;
   id: string;
   direction: "left" | "right";
+  /** Make this block full-bleed and kill grid padding/gutters */
+  fullBleed?: boolean;
+  /** Optional CSS for hero background (color/gradient) */
+  heroBg?: string;
 }

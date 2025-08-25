@@ -10,6 +10,23 @@ export const ContentSection = styled("section")`
   }
 `;
 
+export const HeroSection = styled(ContentSection)`
+  /* full-bleed breakout */
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+
+  /* background for hero (override via inline style var) */
+  background: var(--hero-bg, linear-gradient(135deg, #ff7a00, #2e186a));
+
+  /* neutralize Ant Grid's negative margins & col padding */
+  .ant-row { margin-left: 0 !important; margin-right: 0 !important; }
+  .ant-col { padding-left: 0 !important; padding-right: 0 !important; }
+`;
+
 export const Content = styled("p")`
   margin: 1.5rem 0 2rem 0;
 `;
@@ -60,7 +77,6 @@ export const ButtonWrapper = styled("div")`
   }
 `;
 
-/* ⬇️ New: CTA styles (anchors as buttons) */
 export const CtaRow = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -81,20 +97,10 @@ export const CtaLink = styled.a`
   background: var(--orange);
   color: #fff;
   box-shadow: 0 2px 6px rgba(46, 24, 106, 0.25);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
-  min-height: 36px; /* improves touch targets */
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
+  min-height: 36px;
 
-  &[data-variant="secondary"] {
-    background: var(--purple);
-    color: #fff;
-  }
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 14px rgba(46, 24, 106, 0.35);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
+  &[data-variant="secondary"] { background: var(--purple); color:#fff; }
+  &:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(46,24,106,.35); }
+  &:active { transform: translateY(0); }
 `;

@@ -7,6 +7,7 @@ import { Button } from "../../common/Button";
 import { SvgIcon } from "../../common/SvgIcon";
 import {
   ContentSection,
+  HeroSection,
   Content,
   ContentWrapper,
   ServiceWrapper,
@@ -27,24 +28,35 @@ const ContentBlock = ({
   t,
   id,
   direction,
+  fullBleed,
+  heroBg,
 }: ContentBlockProps) => {
   const scrollTo = (id: string) => {
-    const element = document.getElementById(id) as HTMLDivElement | null;
-    element?.scrollIntoView({ behavior: "smooth" });
+    const el = document.getElementById(id) as HTMLDivElement | null;
+    el?.scrollIntoView({ behavior: "smooth" });
   };
 
   const isExternal = (href?: string, explicit?: boolean) =>
     explicit ?? Boolean(href && /^https?:\/\//i.test(href));
 
+  const Section = fullBleed ? HeroSection : ContentSection;
+
   return (
-    <ContentSection>
+    <Section style={fullBleed ? ({ ["--hero-bg" as any]: heroBg } as React.CSSProperties) : undefined}>
       <Fade direction={direction} triggerOnce>
-        <StyledRow justify="space-between" align="middle" id={id} direction={direction}>
-          <Col lg={11} md={11} sm={12} xs={24}>
+        <StyledRow
+          id={id}
+          direction={direction}
+          justify="space-between"
+          align="middle"
+          gutter={fullBleed ? [0, 0] : undefined}  // ⬅ zero gutter inside hero
+        >
+          {/* Make columns fill the row: 12 + 12 = 24 */}
+          <Col lg={12} md={12} sm={24} xs={24}>
             <SvgIcon src={icon} width="100%" height="100%" />
           </Col>
 
-          <Col lg={11} md={11} sm={11} xs={24}>
+          <Col lg={12} md={12} sm={24} xs={24}>
             <ContentWrapper>
               <h6>{t(title)}</h6>
               <Content>{t(content)}</Content>
@@ -53,27 +65,24 @@ const ContentBlock = ({
                 <ButtonWrapper>
                   {Array.isArray(button) &&
                     button.map((item, idx) => {
-                      if (item.href) {
-                        const external = isExternal(item.href, item.external);
+                      if ((item as any).href) {
+                        const b = item as any;
+                        const external = isExternal(b.href, b.external);
                         return (
                           <CtaLink
-                            key={`${item.href}-${idx}`}
-                            href={item.href}
+                            key={`${b.href}-${idx}`}
+                            href={b.href}
                             target={external ? "_blank" : undefined}
                             rel={external ? "noopener noreferrer" : undefined}
-                            data-variant={item.color ? "secondary" : "primary"}
-                            aria-label={
-                              external
-                                ? `${t(item.title)} (odpre se v novem zavihku)`
-                                : t(item.title)
-                            }
+                            data-variant={b.color ? "secondary" : "primary"}
+                            aria-label={external ? `${t(b.title)} (odpre se v novem zavihku)` : t(b.title)}
                           >
-                            {t(item.title)}
+                            {t(b.title)}
                           </CtaLink>
                         );
                       }
                       return (
-                        <Button key={idx} color={item.color} onClick={() => scrollTo("about")}>
+                        <Button key={idx} color={(item as any).color} onClick={() => scrollTo("about")}>
                           {t(item.title)}
                         </Button>
                       );
@@ -100,11 +109,7 @@ const ContentBlock = ({
                                     target={external ? "_blank" : undefined}
                                     rel={external ? "noopener noreferrer" : undefined}
                                     data-variant={cta.variant ?? (i > 0 ? "secondary" : "primary")}
-                                    aria-label={
-                                      external
-                                        ? `${t(cta.label)} (odpre se v novem zavihku)`
-                                        : t(cta.label)
-                                    }
+                                    aria-label={external ? `${t(cta.label)} (odpre se v novem zavihku)` : t(cta.label)}
                                   >
                                     {t(cta.label)}
                                   </CtaLink>
@@ -121,7 +126,7 @@ const ContentBlock = ({
           </Col>
         </StyledRow>
       </Fade>
-    </ContentSection>
+    </Section>
   );
 };
 
