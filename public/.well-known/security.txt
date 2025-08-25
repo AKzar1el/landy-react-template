@@ -1,0 +1,18 @@
+# security.txt — recommended template
+# Lines starting with "#" are comments and are ignored by parsers.
+
+# How to contact you (ordered by preference)
+Contact: mailto:info@tomlero.si
+Contact: https://tomlero.si/security-report
+
+# Where this file officially lives (list the exact URL that serves it)
+Canonical: https://tomlero.si/.well-known/security.txt
+
+# Your vulnerability disclosure policy
+Policy: https://tomlero.si/vulnerability-disclosure 
+
+# Prefer report languages (BCP47 tags)
+Preferred-Languages: sl, en
+
+# Rotate this before it goes stale (recommended: < 1 year ahead)
+Expires: 2026-08-20T23:59:59Z
