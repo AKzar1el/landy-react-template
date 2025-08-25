@@ -1,0 +1,15 @@
+{
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "rewrites": [{ "source": "/(.*)", "destination": "/" }],
+    "headers": [
+      {
+        "source": "/(favicon\\.ico|favicon\\.svg|apple-touch-icon\\.png|android-chrome-\\d+x\\d+\\.png|site\\.webmanifest)",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, immutable" }]
+      },
+      {
+        "source": "/og-image\\.png",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
+      }
+    ]
+  }
+  
