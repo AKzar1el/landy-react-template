@@ -7,6 +7,24 @@ export const HeaderSection = styled("header")`
   /* NEW: give the header the same gradient as hero */
   background: #2E186A;
   color: #fff; /* make default text readable on gradient */
+  /* already sticky from before? keep it; if not, add these: */
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  /* smooth, minimal animation */
+  transition: padding 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+
+  &.scrolled {
+    padding: 0.5rem 0.5rem; /* slight compress */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2); /* soft elevation */
+  }
+
+  /* accessibility: respect users who prefer less motion */
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 
   .ant-row-space-between {
     align-items: center;

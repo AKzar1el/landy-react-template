@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Row, Col, Drawer } from "antd";
 import { withTranslation, TFunction } from "react-i18next";
 import Container from "../../common/Container";
@@ -18,17 +18,22 @@ import {
 
 const Header = ({ t }: { t: TFunction }) => {
   const [visible, setVisibility] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const toggleButton = () => {
-    setVisibility(!visible);
-  };
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const toggleButton = () => setVisibility(!visible);
 
   const MenuItem = () => {
     const scrollTo = (id: string) => {
-      const element = document.getElementById(id) as HTMLDivElement;
-      element.scrollIntoView({
-        behavior: "smooth",
-      });
+      const el = document.getElementById(id) as HTMLDivElement | null;
+      if (!el) return;
+      el.scrollIntoView({ behavior: "smooth" });
       setVisibility(false);
     };
     return (
@@ -42,20 +47,15 @@ const Header = ({ t }: { t: TFunction }) => {
         <CustomNavLinkSmall onClick={() => scrollTo("product")}>
           <Span>{t("Produkt")}</Span>
         </CustomNavLinkSmall>
-        <CustomNavLinkSmall
-          style={{ width: "180px" }}
-          onClick={() => scrollTo("contact")}
-        >
-          <Span>
-            <Button>{t("ZAČNI BREZPLAČNO")}</Button>
-          </Span>
+        <CustomNavLinkSmall style={{ width: "180px" }} onClick={() => scrollTo("contact")}>
+          <Span><Button>{t("ZAČNI BREZPLAČNO")}</Button></Span>
         </CustomNavLinkSmall>
       </>
     );
   };
 
   return (
-    <HeaderSection>
+    <HeaderSection className={scrolled ? "scrolled" : ""}>
       <Container>
         <Row justify="space-between">
           <LogoContainer to="/" aria-label="homepage">
@@ -68,15 +68,17 @@ const Header = ({ t }: { t: TFunction }) => {
             <Outline />
           </Burger>
         </Row>
-        <Drawer closable={false} open={visible} onClose={toggleButton}>
+
+        <Drawer
+          closable={false}
+          open={visible}
+          onClose={toggleButton}
+          zIndex={1000}        /* stays over the sticky header */
+        >
           <Col style={{ marginBottom: "2.5rem" }}>
             <Label onClick={toggleButton}>
-              <Col span={12}>
-                <Menu>Menu</Menu>
-              </Col>
-              <Col span={12}>
-                <Outline />
-              </Col>
+              <Col span={12}><Menu>Menu</Menu></Col>
+              <Col span={12}><Outline /></Col>
             </Label>
           </Col>
           <MenuItem />
